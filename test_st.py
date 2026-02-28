@@ -22,8 +22,9 @@ def test_st():
 
     # Create a random audio signal
     x = torch.randn(2, 1, 16000, requires_grad=True)
-
     model.eval()
+    x_org_quantized = model.decode(model.encode(x))
+    model.train()
     x_org_quantized = model.decode(model.encode(x))
 
     for _ in range(10):
