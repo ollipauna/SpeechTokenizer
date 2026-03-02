@@ -25,7 +25,6 @@ def test_st():
     model.eval()
     x_org_quantized = model.decode(model.encode(x))
     model.train()
-    x_org_quantized = model.decode(model.encode(x))
 
     for _ in range(10):
     
