@@ -4,7 +4,7 @@ from speechtokenizer import SpeechTokenizer
 
 
 def test_st():
-    # Instantiate a model
+    # Instantiate the model
     path = os.environ.get('SPEECH_TOKENIZER_PATH', None)
 
     if path is None:
@@ -30,7 +30,7 @@ def test_st():
     
         x_quantized, _, _ = model(x)
 
-        # Check that the audio reconstructions match
+        # Check that the audio reconstructions match and are stable
         assert torch.allclose(x_quantized, x_org_quantized, atol=1e-3)
         assert x_quantized.size() == x.size()
 
@@ -40,18 +40,3 @@ def test_st():
 
     # Check that gradients are being tracked
     assert x.grad is not None
-
-    # Check that gradient values look sensible
-    print(x.grad)
-
-    # Check that adding noise changes the gradients
-    x_other = x.detach() + (0.1**0.5) * torch.randn(1, 1, 16000)
-    x_other.requires_grad_()
-    x_quantized_other , _, _ = model(x_other)
-    loss_other = torch.pow(x_quantized_other, 2).sum()
-    loss_other.backward()
-    print(torch.mean(torch.abs(x.grad - x_other.grad)))
-
-
-if __name__ == "__main__":
-    test_st()

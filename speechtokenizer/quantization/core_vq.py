@@ -211,6 +211,8 @@ class EuclideanCodebook(nn.Module):
         embed_ind = self.postprocess_emb(embed_ind, shape)
         quantize = self.dequantize(embed_ind)
 
+        # Codebook update is disabled in this version
+
         return quantize, embed_ind
 
 
