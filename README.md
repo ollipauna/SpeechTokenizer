@@ -1,4 +1,27 @@
-# SpeechTokenizer: Unified Speech Tokenizer for Speech Language Models
+# Differentiable SpeechTokenizer: Unified Speech Tokenizer for Speech Language Models
+
+This is a modified version of the official SpeechTokenizer repo. This version uses the Straight-Through Estimator to track gradients during inference.
+Pretrained models can then be used for e.g. audio watermarking augmentation.
+
+### Usage
+
+```
+    import torch
+    from speechtokenizer import SpeechTokenizer
+    
+    model = SpeechTokenizer.load_from_checkpoint(config_path, ckpt_path)
+    model.train()
+    x = torch.randn(1, 1, 16000, requires_grad=True)
+    x_quantized, _, _ = model(x)
+
+    loss = x_quantized.mean()
+    loss.backward()
+
+    # x.grad is now defined
+```
+
+Model still has to be used in training mode, because otherwise cuda will raise an error regarding RNN backpropagation. However, the EMA codebook updates have been removed so this should be functionally similar to inference mode.
+
 
 <a href='https://0nutation.github.io/SpeechTokenizer.github.io/'><img src='https://img.shields.io/badge/Project-Page-Green'></a>  <a href='https://arxiv.org/abs/2308.16692'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
 
