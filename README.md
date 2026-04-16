@@ -22,6 +22,11 @@ Pretrained models can then be used for e.g. audio watermarking augmentation.
 
 Model still has to be used in training mode, because otherwise cuda will raise an error regarding RNN backpropagation. However, the EMA codebook updates have been removed so this should be functionally similar to inference mode.
 
+### Installation
+
+Clone the repo and install it with pip. Also check the instruction below for how to download the model parameters.
+
+### Below you have the contents of the README file from the official release.
 
 <a href='https://0nutation.github.io/SpeechTokenizer.github.io/'><img src='https://img.shields.io/badge/Project-Page-Green'></a>  <a href='https://arxiv.org/abs/2308.16692'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
 
